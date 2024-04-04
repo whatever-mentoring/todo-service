@@ -11,7 +11,7 @@ export const wrapBox = {
     paddingTop: "4px",
     maxWidth: "calc(100% - 100px)",
     width: "1200px",
-    borderRadius: theme.borderRadius.r4,
+    borderRadius: theme.borderRadius.r7,
     boxShadow: theme.boxShadow.normal,
     overflow: "hidden",
     boxSizing: "border-box",

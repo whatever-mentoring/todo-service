@@ -22,6 +22,7 @@ export const theme = createGlobalTheme(":root", {
     blue: "#0d6ff8",
     skyBlue: "#ecf1f9",
     aquaBlue: "#e7f0fd",
+    coralBlue: "#c3d7f8",
     navy: "#20273d",
     gray: "#f1f3f9",
     darkGray: "#606781",

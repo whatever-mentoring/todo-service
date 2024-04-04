@@ -13,5 +13,6 @@ export const headerBox = {
     display: "flex",
     alignItems: theme.layout.alignItems.center,
     fontSize: theme.fontSizes.size22,
+    color: theme.color.blue,
   }),
 };
