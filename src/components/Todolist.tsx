@@ -1,6 +1,7 @@
 import React, { useReducer, useState } from "react";
 import TodoAdd from "./TodoAdd";
 import { listBox } from "../styles/todoList.css";
+import { useTodoStore } from "../utils/store";
 
 interface TodolistProps {
   defaultTitle: {
@@ -10,6 +11,7 @@ interface TodolistProps {
 }
 
 const Todolist = ({ defaultTitle }: TodolistProps) => {
+  const { todos } = useTodoStore();
   const [visibleAdd, setVisibelAdd] = useState<{ [key: number]: boolean }>({});
 
   const toggleAdd = (id: number) => {
@@ -27,16 +29,31 @@ const Todolist = ({ defaultTitle }: TodolistProps) => {
 
   return (
     <div className={listBox.list}>
-      {defaultTitle.map((item) => (
-        <div key={item.id} className={listBox.item}>
+      {defaultTitle.map((item, index) => (
+        <div key={index} className={listBox.item}>
           <strong className={listBox.itemTitle}>{item.title}</strong>
           <button
             className={listBox.itemAdd}
             onClick={() => toggleAdd(item.id)}
           >
-            add
+            추가
           </button>
-          {visibleAdd[item.id] && <TodoAdd stateId={item.id} />}
+          {visibleAdd[item.id] && (
+            <TodoAdd stateId={item.id} toggleAdd={toggleAdd} />
+          )}
+          {["todo", "doing", "done"].map(
+            (state, index) =>
+              item.id === index && (
+                <div key={index}>
+                  {todos[state as "todo" | "doing" | "done"].map((todoItem) => (
+                    <div key={todoItem.id} className={listBox.itemList}>
+                      <pre className={listBox.itemText}>{todoItem.text}</pre>
+                      <button className={listBox.itemRemove}>삭제</button>
+                    </div>
+                  ))}
+                </div>
+              )
+          )}
         </div>
       ))}
     </div>

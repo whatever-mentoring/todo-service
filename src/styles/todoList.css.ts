@@ -42,6 +42,22 @@ export const listBox = {
       transform: "rotate(-45deg)",
     },
   }),
+  itemRemove: style({
+    position: "absolute",
+    top: "15px",
+    right: "15px",
+    width: "24px",
+    height: "24px",
+    textIndent: "-9999px",
+    background: `${theme.color.coralBlue} url('../assets/icon_remove.png') no-repeat center`,
+    border: theme.borderLine.borderNone,
+    borderRadius: theme.borderRadius.r50,
+    cursor: "pointer",
+    transition: "all ease 0.2s",
+    ":hover": {
+      transform: "rotate(-45deg)",
+    },
+  }),
   addBox: style({
     marginBottom: "15px",
     padding: "10px",
@@ -54,5 +70,19 @@ export const listBox = {
     justifyContent: theme.layout.justifyContent.between,
     gap: "8px",
     marginTop: "5px",
+  }),
+  itemList: style({
+    position: "relative",
+    marginBottom: "15px",
+    padding: "20px 48px 20px 20px",
+    minHeight: "50px",
+    background: theme.color.white,
+    borderRadius: theme.borderRadius.r10,
+    boxShadow: theme.boxShadow.small,
+  }),
+  itemText: style({
+    paddingLeft: "15px",
+    whiteSpace: "pre-wrap",
+    fontSize: theme.fontSizes.size15,
   }),
 };

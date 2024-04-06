@@ -57,6 +57,6 @@ export const theme = createGlobalTheme(":root", {
   },
   boxShadow: {
     normal: "0px 3px 15px 2px rgba(0,0,0,0.1)",
-    small: "0px 1px 10px 0px rgba(0,0,0,0.1)",
+    small: "0px 2px 8px 0px rgba(0,0,0,0.1)",
   },
 });
