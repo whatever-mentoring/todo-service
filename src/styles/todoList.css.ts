@@ -42,4 +42,17 @@ export const listBox = {
       transform: "rotate(-45deg)",
     },
   }),
+  addBox: style({
+    marginBottom: "15px",
+    padding: "10px",
+    background: theme.color.deepGray,
+    borderRadius: theme.borderRadius.r10,
+    boxShadow: theme.boxShadow.small,
+  }),
+  btnBox: style({
+    display: "flex",
+    justifyContent: theme.layout.justifyContent.between,
+    gap: "8px",
+    marginTop: "5px",
+  }),
 };

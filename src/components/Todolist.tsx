@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
+import TodoAdd from "./TodoAdd";
 import { listBox } from "../styles/todoList.css";
 
 interface TodolistProps {
@@ -12,7 +13,16 @@ const Todolist = ({ defaultTitle }: TodolistProps) => {
   const [visibleAdd, setVisibelAdd] = useState<{ [key: number]: boolean }>({});
 
   const toggleAdd = (id: number) => {
-    setVisibelAdd((prev) => ({ ...prev, [id]: !prev[id] }));
+    setVisibelAdd((prev) => {
+      const newState = Object.keys(prev).reduce<{ [key: string]: boolean }>(
+        (acc, cur) => {
+          acc[cur] = false;
+          return acc;
+        },
+        {}
+      );
+      return { ...newState, [id]: !prev[id] };
+    });
   };
 
   return (
@@ -26,7 +36,7 @@ const Todolist = ({ defaultTitle }: TodolistProps) => {
           >
             add
           </button>
-          {visibleAdd[item.id] && <div></div>}
+          {visibleAdd[item.id] && <TodoAdd stateId={item.id} />}
         </div>
       ))}
     </div>
