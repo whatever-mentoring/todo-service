@@ -26,6 +26,8 @@ export const theme = createGlobalTheme(":root", {
     navy: "#20273d",
     gray: "#f1f3f9",
     darkGray: "#606781",
+    deepGray: "#d8dde7",
+    lightGray: "#dfe1e7",
   },
   fontSizes: {
     size32: "3.2rem",
@@ -34,6 +36,7 @@ export const theme = createGlobalTheme(":root", {
     size16: "1.6rem",
     size15: "1.5rem",
     size14: "1.4rem",
+    size13: "1.3rem",
     size12: "1.2rem",
   },
   fontWeight: {
@@ -46,6 +49,7 @@ export const theme = createGlobalTheme(":root", {
   borderRadius: {
     r4: "4px",
     r7: "7px",
+    r10: "10px",
     r50: "50px",
   },
   borderLine: {
@@ -54,5 +58,6 @@ export const theme = createGlobalTheme(":root", {
   },
   boxShadow: {
     normal: "0px 3px 15px 2px rgba(0,0,0,0.1)",
+    small: "0px 2px 8px 0px rgba(0,0,0,0.1)",
   },
 });
