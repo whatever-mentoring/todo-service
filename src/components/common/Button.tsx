@@ -4,15 +4,15 @@ import { common } from "../../styles/common.css";
 interface btnType {
   text: string;
   onClick?: () => void;
-  name?: string;
+  name?: string[];
 }
 
 const Button = ({ text, onClick, name }: btnType) => {
+  const className = `${common.btn} ${
+    name ? name.map((n) => common[n]).join(" ") : ""
+  }`;
   return (
-    <button
-      className={`${common.btn} ${name ? common[name] : ""}`}
-      onClick={onClick}
-    >
+    <button className={className} onClick={onClick}>
       {text}
     </button>
   );

@@ -27,6 +27,7 @@ export const theme = createGlobalTheme(":root", {
     gray: "#f1f3f9",
     darkGray: "#606781",
     deepGray: "#d8dde7",
+    lightGray: "#dfe1e7",
   },
   fontSizes: {
     size32: "3.2rem",

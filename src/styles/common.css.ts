@@ -30,5 +30,10 @@ export const common: CommonStyles = {
     color: theme.color.white,
     background: theme.color.blue,
     border: theme.borderLine.borderNone,
+    transition: "all ease 0.2s",
+  }),
+  btnOff: style({
+    opacity: "0.5",
+    transition: "all ease 0.2s",
   }),
 };

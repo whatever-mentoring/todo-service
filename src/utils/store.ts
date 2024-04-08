@@ -2,7 +2,7 @@ import create from "zustand";
 
 interface Todo {
   id: number;
-  text: string;
+  text?: string;
   stateId: number;
 }
 
@@ -12,7 +12,15 @@ interface TodoState {
     doing: Todo[];
     done: Todo[];
   };
+  counts: {
+    todoCount: number;
+    doingCount: number;
+    doneCount: number;
+  };
+  itemId: number;
+  increaseAddId: () => void;
   addTodo: ({ id, text, stateId }: Todo) => void;
+  removeTodo: ({ id, stateId }: Todo) => void;
 }
 
 export const useTodoStore = create<TodoState>((set) => ({
@@ -21,6 +29,13 @@ export const useTodoStore = create<TodoState>((set) => ({
     doing: [],
     done: [],
   },
+  counts: {
+    todoCount: 0,
+    doingCount: 0,
+    doneCount: 0,
+  },
+  itemId: 0,
+  increaseAddId: () => set((state) => ({ itemId: state.itemId + 1 })),
   addTodo: ({ id, text, stateId }) =>
     set((state) => {
       const newTodo = { id, text, stateId };
@@ -28,17 +43,58 @@ export const useTodoStore = create<TodoState>((set) => ({
         case 0:
           return {
             todos: { ...state.todos, todo: [...state.todos.todo, newTodo] },
+            counts: { ...state.counts, todoCount: state.counts.todoCount + 1 },
           };
         case 1:
           return {
             todos: { ...state.todos, doing: [...state.todos.doing, newTodo] },
+            counts: {
+              ...state.counts,
+              doingCount: state.counts.doingCount + 1,
+            },
           };
         case 2:
           return {
             todos: { ...state.todos, done: [...state.todos.done, newTodo] },
+            counts: { ...state.counts, doneCount: state.counts.doneCount + 1 },
           };
         default:
           return state;
       }
     }),
+  removeTodo: ({ id, stateId }) => {
+    set((state) => {
+      switch (stateId) {
+        case 0:
+          return {
+            todos: {
+              ...state.todos,
+              todo: state.todos.todo.filter((item) => item.id !== id),
+            },
+            counts: { ...state.counts, todoCount: state.counts.todoCount - 1 },
+          };
+        case 1:
+          return {
+            todos: {
+              ...state.todos,
+              doing: state.todos.doing.filter((item) => item.id !== id),
+            },
+            counts: {
+              ...state.counts,
+              doingCount: state.counts.doingCount - 1,
+            },
+          };
+        case 2:
+          return {
+            todos: {
+              ...state.todos,
+              done: state.todos.done.filter((item) => item.id !== id),
+            },
+            counts: { ...state.counts, doneCount: state.counts.doneCount - 1 },
+          };
+        default:
+          return state;
+      }
+    });
+  },
 }));

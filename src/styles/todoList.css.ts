@@ -20,11 +20,21 @@ export const listBox = {
     boxSizing: "border-box",
   }),
   itemTitle: style({
-    display: "block",
+    display: "flex",
+    alignItems: theme.layout.alignItems.center,
     marginBottom: "20px",
     fontSize: theme.fontSizes.size18,
     fontWeight: "600",
     color: theme.color.navy,
+  }),
+  itemLength: style({
+    marginLeft: "10px",
+    padding: "3px 7px",
+    fontSize: theme.fontSizes.size14,
+    fontWeight: theme.fontWeight.weight400,
+    color: theme.color.navy,
+    background: theme.color.lightGray,
+    borderRadius: theme.borderRadius.r7,
   }),
   itemAdd: style({
     position: "absolute",
@@ -71,6 +81,10 @@ export const listBox = {
     gap: "8px",
     marginTop: "5px",
   }),
+  listWrap: style({
+    maxHeight: "calc(100% - 40px)",
+    overflowY: "auto",
+  }),
   itemList: style({
     position: "relative",
     marginBottom: "15px",
@@ -81,8 +95,19 @@ export const listBox = {
     boxShadow: theme.boxShadow.small,
   }),
   itemText: style({
-    paddingLeft: "15px",
+    position: "relative",
+    paddingLeft: "20px",
     whiteSpace: "pre-wrap",
+    wordBreak: "break-all",
     fontSize: theme.fontSizes.size15,
+    "::before": {
+      content: "",
+      position: "absolute",
+      top: "0",
+      left: "0",
+      width: "12px",
+      height: "16px",
+      background: "url('../assets/icon_file.png') no-repeat center",
+    },
   }),
 };

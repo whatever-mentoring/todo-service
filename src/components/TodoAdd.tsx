@@ -10,20 +10,32 @@ interface stateType {
 }
 
 const TodoAdd = ({ stateId, toggleAdd }: stateType) => {
-  const { addTodo } = useTodoStore();
-  const [addId, setAddId] = useState(0);
+  const { addTodo, itemId, increaseAddId } = useTodoStore();
   const [areaVal, setAreaVal] = useState("");
+  const [addActive, setAddActive] = useState(false);
 
   const addTodoItem = () => {
-    addTodo({ id: addId, text: areaVal, stateId });
-    setAddId(addId + 1);
+    if (addActive) {
+      addTodo({ id: itemId, text: areaVal, stateId });
+      increaseAddId();
+      setAreaVal("");
+      setAddActive(false);
+    }
   };
 
   return (
     <div className={listBox.addBox}>
-      <Textarea setAreaVal={setAreaVal} />
+      <Textarea
+        areaVal={areaVal}
+        setAreaVal={setAreaVal}
+        setAddActive={setAddActive}
+      />
       <div className={listBox.btnBox}>
-        <Button text={"추가"} name={"active"} onClick={() => addTodoItem()} />
+        <Button
+          text={"추가"}
+          name={["active", addActive ? "" : "btnOff"].filter(Boolean)}
+          onClick={() => addTodoItem()}
+        />
         <Button text={"취소"} onClick={() => toggleAdd(stateId)} />
       </div>
     </div>
