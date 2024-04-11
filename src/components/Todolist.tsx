@@ -1,5 +1,6 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import TodoAdd from "./TodoAdd";
+import { Modal } from "./modal/Modal";
 import { listBox } from "../styles/todoList.css";
 import { useTodoStore } from "../utils/store";
 
@@ -10,7 +11,17 @@ interface TodolistProps {
   }[];
 }
 
+interface TodoItem {
+  id: number;
+  text?: string;
+  stateId: number;
+}
+
 const Todolist = ({ defaultTitle }: TodolistProps) => {
+  const [contentModalOpen, setContentModalOpen] = useState(false);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [contentState, setContentState] = useState<TodoItem | null>(null);
+  const [confirmState, setConfirmState] = useState<TodoItem | null>(null);
   const { todos, counts, removeTodo } = useTodoStore();
   const [visibleAdd, setVisibelAdd] = useState<{ [key: number]: boolean }>({});
 
@@ -27,11 +38,27 @@ const Todolist = ({ defaultTitle }: TodolistProps) => {
     });
   };
 
-  const removeTodoItem = (id: number, stateId: number) => {
-    const isConfirmed = window.confirm("선택하신 카드를 삭제하시겠습니까?");
-    if (isConfirmed) {
-      removeTodo({ id, stateId });
-    }
+  const removeTodoItem = (
+    event: React.MouseEvent<HTMLElement>,
+    id: number,
+    stateId: number
+  ) => {
+    event.stopPropagation();
+    setConfirmState({ id, stateId });
+    setConfirmModalOpen(true);
+  };
+
+  const contentEdit = (todoItem: TodoItem) => {
+    setContentState(todoItem);
+    setContentModalOpen(true);
+  };
+
+  const closeContentModal = () => {
+    setContentModalOpen(false);
+  };
+
+  const closeConfirmModal = () => {
+    setConfirmModalOpen(false);
   };
 
   const renderTodoItems = (state: string, itemId: number) => {
@@ -39,17 +66,51 @@ const Todolist = ({ defaultTitle }: TodolistProps) => {
     return (
       <div key={itemId}>
         {todos[state as "todo" | "doing" | "done"].map((todoItem) => (
-          <div key={todoItem.id} className={listBox.itemList}>
+          <div
+            key={todoItem.id}
+            className={listBox.itemList}
+            onDoubleClick={() => {
+              contentEdit(todoItem);
+            }}
+          >
             <pre className={listBox.itemText}>{todoItem.text}</pre>
             <button
               className={listBox.itemRemove}
-              onClick={() => removeTodoItem(todoItem.id, itemId)}
+              onClick={(event) => removeTodoItem(event, todoItem.id, itemId)}
             >
               삭제
             </button>
           </div>
         ))}
       </div>
+    );
+  };
+
+  const renderModal = (modalProps: TodoItem) => {
+    let template = "";
+    let title = "";
+    let isOpen = false;
+    let setIsOpen = () => {};
+
+    if (modalProps === contentState) {
+      template = "editContent";
+      title = "내용수정";
+      isOpen = contentModalOpen;
+      setIsOpen = closeContentModal;
+    } else if (modalProps === confirmState) {
+      template = "confirm";
+      isOpen = confirmModalOpen;
+      setIsOpen = closeConfirmModal;
+    }
+
+    return (
+      <Modal
+        openState={isOpen}
+        setIsOpen={setIsOpen}
+        template={template}
+        title={title}
+        todoContent={modalProps}
+      />
     );
   };
 
@@ -82,6 +143,8 @@ const Todolist = ({ defaultTitle }: TodolistProps) => {
           </div>
         </div>
       ))}
+      {contentModalOpen && contentState && renderModal(contentState)}
+      {confirmModalOpen && confirmState && renderModal(confirmState)}
     </div>
   );
 };

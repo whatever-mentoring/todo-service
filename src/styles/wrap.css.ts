@@ -3,18 +3,17 @@ import { theme } from "./theme.css";
 
 export const wrapBox = {
   wrap: style({
-    position: "absolute",
+    position: "relative",
     top: "50px",
-    left: "50%",
-    bottom: "50px",
-    transform: "translateX(-50%)",
+    margin: "auto",
     paddingTop: "4px",
     maxWidth: "calc(100% - 100px)",
     width: "1200px",
+    height: "calc(100vh - 100px)",
     borderRadius: theme.borderRadius.r7,
     boxShadow: theme.boxShadow.normal,
-    overflow: "hidden",
     boxSizing: "border-box",
+    overflow: "hidden",
     "::after": {
       content: "",
       position: "absolute",
