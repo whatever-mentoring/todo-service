@@ -1,8 +1,8 @@
 import React, { useReducer, useState } from "react";
 import Textarea from "./common/Textarea";
 import Button from "./common/Button";
-import { listBox } from "../styles/todoList.css";
 import { useTodoStore } from "../utils/store";
+import { listBox } from "../styles/todoList.css";
 
 interface stateType {
   stateId: number;
@@ -14,12 +14,16 @@ const TodoAdd = ({ stateId, toggleAdd }: stateType) => {
   const [areaVal, setAreaVal] = useState("");
   const [addActive, setAddActive] = useState(false);
 
+  const cleanUpModal = () => {
+    increaseAddId();
+    setAreaVal("");
+    setAddActive(false);
+  };
+
   const addTodoItem = () => {
     if (addActive) {
       addTodo({ id: itemId, text: areaVal, stateId });
-      increaseAddId();
-      setAreaVal("");
-      setAddActive(false);
+      cleanUpModal();
     }
   };
 
