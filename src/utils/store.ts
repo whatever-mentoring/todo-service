@@ -21,6 +21,7 @@ interface TodoState {
   increaseAddId: () => void;
   addTodo: ({ id, text, stateId }: Todo) => void;
   removeTodo: ({ id, stateId }: Todo) => void;
+  updateTodo: ({ id, text }: Todo) => void;
 }
 
 export const useTodoStore = create<TodoState>((set) => ({
@@ -91,6 +92,42 @@ export const useTodoStore = create<TodoState>((set) => ({
               done: state.todos.done.filter((item) => item.id !== id),
             },
             counts: { ...state.counts, doneCount: state.counts.doneCount - 1 },
+          };
+        default:
+          return state;
+      }
+    });
+  },
+  updateTodo: ({ id, text, stateId }) => {
+    set((state) => {
+      const updateTodos = (todos: Todo[]) =>
+        todos.map((todo) => (todo.id === id ? { ...todo, text } : todo));
+
+      switch (stateId) {
+        case 0:
+          return {
+            ...state,
+            todos: {
+              ...state.todos,
+              todo: updateTodos(state.todos.todo),
+            },
+          };
+        case 1:
+          console.log(state.todos.doing, id, text, stateId);
+          return {
+            ...state,
+            todos: {
+              ...state.todos,
+              doing: updateTodos(state.todos.doing),
+            },
+          };
+        case 2:
+          return {
+            ...state,
+            todos: {
+              ...state.todos,
+              done: updateTodos(state.todos.done),
+            },
           };
         default:
           return state;
